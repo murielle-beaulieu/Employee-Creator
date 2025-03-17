@@ -3,9 +3,7 @@ package io.nology.employee_creator.employee;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-@Data
-public class CreateEmployeeDTO {
-
+@Data public class UpdateEmployeeDTO {
   public enum Contract {
     CASUAL,
     CONTRACTOR,
@@ -50,4 +48,5 @@ public class CreateEmployeeDTO {
   private Contract contract;
 
   private Boolean on_probation;
+
 }

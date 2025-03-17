@@ -50,8 +50,11 @@ import lombok.Data;
   @Column
   private String dob; // yyyy-mm-dd
 
-  @Column
+  @Column(unique=true)
   private String email; // email@address.com
+
+  @Column
+  private String password;
 
   @Column
   private String address; // must be australian
