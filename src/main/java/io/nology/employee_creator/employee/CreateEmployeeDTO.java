@@ -31,11 +31,16 @@ public class CreateEmployeeDTO {
 
   private String dob; // yyyy-mm-dd
 
+  private String phone_number;
+
   @NotBlank
   private String email; // email@address.com
 
   @NotBlank
-  private String password;
+  private String username;
+
+  @NotBlank
+  private String password; // use dob
 
   private String address; // must be australian
 
@@ -50,4 +55,6 @@ public class CreateEmployeeDTO {
   private Contract contract;
 
   private Boolean on_probation;
+
+  private Boolean deleted;
 }

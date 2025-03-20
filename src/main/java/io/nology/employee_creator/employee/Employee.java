@@ -14,10 +14,14 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "employees")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data public class Employee {
 
   public enum Contract {
@@ -50,8 +54,14 @@ import lombok.Data;
   @Column
   private String dob; // yyyy-mm-dd
 
+  @Column
+  private String phone_number;
+
   @Column(unique=true)
   private String email; // email@address.com
+
+  @Column(unique=true)
+  private String username;
 
   @Column
   private String password;
@@ -75,7 +85,10 @@ import lombok.Data;
   private Contract contract;
 
   @Column
-  private Boolean on_probation;
+  private Boolean on_probation = true;
+
+  @Column
+  private Boolean deleted = false;
 
   @Column
   @Temporal(TemporalType.TIMESTAMP)
@@ -97,8 +110,4 @@ import lombok.Data;
     updatedAt = new Date();
   }
 
-  public Employee() {
-  }
 }
-
-// before Lombok: 211 lines
