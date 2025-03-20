@@ -23,12 +23,15 @@ export const ManagementLandingPage = () => {
   return (
     <>
     {!loading && <Header data={employee}/>}
+    <div>
      {!loading &&
-     <>
+     <div>
     <h1>Management Landing Page</h1>
+    <button><Link to="see_all">See All Employees</Link></button>
     <EmployeeDetails data={employee} />
-    <Link to="see_all">HEEHEE</Link>
-    </>}
+    </div>
+    }
+    </div>
     </>
 
   )

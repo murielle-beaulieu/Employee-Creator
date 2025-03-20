@@ -4,7 +4,7 @@ import './App.css'
 import EmployeeContextProvider from "./context/EmployeeContext";
 import { LoginPage } from "./pages/LoginPage";
 import { ManagementLandingPage } from "./pages/ManagementLandingPage";
-import { ManagementAdminPage } from "./pages/ManagementAdminPage";
+import { AdminPage } from "./pages/AdminPage";
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<LoginPage/>}/>
         <Route path="home/:id" element={<EmployeeLandingPage/>}/>
         <Route path="home/:id/management" element={<ManagementLandingPage/>}/>
-        <Route path="home/:id/management/see_all" element={<ManagementAdminPage/>}/>
+        <Route path="home/:id/management/see_all" element={<AdminPage/>}/>
       </Routes>
       </EmployeeContextProvider>
     </BrowserRouter>

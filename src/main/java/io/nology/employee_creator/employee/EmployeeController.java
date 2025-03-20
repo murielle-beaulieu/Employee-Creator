@@ -31,18 +31,19 @@ public class EmployeeController {
     return new ResponseEntity<>(allEmployees, HttpStatus.OK);
   }
 
+  @GetMapping("/current")
+  public ResponseEntity<List<Employee>> getCurrentEmployees() {
+    List<Employee> allEmployees = this.employeeService.getCurrentEmployees();
+    return new ResponseEntity<>(allEmployees, HttpStatus.OK);
+  }
+
   @GetMapping("/{id}")
   public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
     Employee found = this.employeeService.getEmployeeById(id);
     return new ResponseEntity<>(found, HttpStatus.OK);
   }
 
-  @GetMapping("/{id}/leave")
-  public ResponseEntity<String> getAnnualLeaveByEmployeeId (@PathVariable Long id) {
-    String leaveAccumulated = this.employeeService.calculateLeave(id);
-    return new ResponseEntity<> (leaveAccumulated, HttpStatus.OK);
-  }
-
+  // Managers only
   @PostMapping()
   public ResponseEntity<Employee> createEmployee (@RequestBody @Valid CreateEmployeeDTO data) {
     Employee newEmployee = this.employeeService.createEmployee(data);
@@ -56,6 +57,7 @@ public class EmployeeController {
     return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
   }
 
+  // Managers only
   @DeleteMapping("/{id}")
   public void deleteEmployee (@PathVariable Long id) {
     this.employeeService.deleteEmployee(id);
