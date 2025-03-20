@@ -1,0 +1,37 @@
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  gap: 1em;
+  height: 20em;
+  width: 20em;
+  border: solid 1px rgb(190, 65, 65);
+  color: black;
+  padding: 2em;
+  margin: 1em;
+}
+
+.field {
+
+  input {
+    height: 2em;
+    width: 100%;
+  }
+}
+
+.login_btn {
+
+  display: flex;
+  justify-content: center;
+  margin: 1em;
+
+  button {
+    padding: 0.5em 2em;
+    margin: 1em auto;
+    background-color: rgb(190, 65, 65);
+    color: white;
+    border: none;
+    border-radius: 1em;
+  }
+}

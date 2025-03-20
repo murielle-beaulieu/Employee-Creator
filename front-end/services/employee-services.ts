@@ -1,3 +1,20 @@
+enum Contract {
+  CASUAL,
+  CONTRACTOR,
+  PART_TIME,
+  FULL_TIME,
+}
+
+enum Department {
+  HOUSEKEEPING,
+  MAINTENANCE,
+  FRONT_DESK,
+  RESERVATIONS,
+  MARKETING,
+  ACCOUNTING,
+  MANAGEMENT,
+}
+
 export interface Employee {
   id: number,
   first_name: string,
@@ -7,17 +24,17 @@ export interface Employee {
   email: string,
   password: string,
   phone_number: string,
+  address: string,
   start_date: string,
   end_date: string | null,
   role: string,
-  department: string,
-  contract: string,
+  department: Department,
+  contract: Contract,
   probation: boolean,
   createdAt: string,
   updatedAt: string,
 }
-// - Department (enum)
-// - Contract - casual, contractor, part time, full time
+
 
 export const getAllEmployees = async () => {
   const response = await fetch("http://localhost:8080/employees");
@@ -25,4 +42,12 @@ export const getAllEmployees = async () => {
     throw new Error("Failed to fetch");
   }
   return (await response.json()) as Employee[];
+}
+
+export const getEmployeeById = async (id: string) => {
+  const response = await fetch("http://localhost:8080/employees/" + id);
+  if (!response.ok) {
+    throw new Error("Failed to fetch");
+  }
+  return (await response.json()) as Employee;
 }
