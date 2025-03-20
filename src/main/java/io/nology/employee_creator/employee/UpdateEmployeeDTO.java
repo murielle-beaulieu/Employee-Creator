@@ -3,9 +3,7 @@ package io.nology.employee_creator.employee;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-@Data
-public class CreateEmployeeDTO {
-
+@Data public class UpdateEmployeeDTO {
   public enum Contract {
     CASUAL,
     CONTRACTOR,
@@ -40,7 +38,7 @@ public class CreateEmployeeDTO {
   private String username;
 
   @NotBlank
-  private String password; // use dob
+  private String password;
 
   private String address; // must be australian
 
@@ -56,5 +54,4 @@ public class CreateEmployeeDTO {
 
   private Boolean on_probation;
 
-  private Boolean deleted;
 }
