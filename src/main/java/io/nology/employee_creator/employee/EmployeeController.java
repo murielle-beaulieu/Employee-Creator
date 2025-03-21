@@ -1,6 +1,7 @@
 package io.nology.employee_creator.employee;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.nology.employee_creator.common.exceptions.NotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -31,32 +33,38 @@ public class EmployeeController {
     return new ResponseEntity<>(allEmployees, HttpStatus.OK);
   }
 
+  @GetMapping("/current")
+  public ResponseEntity<List<Employee>> getCurrentEmployees() {
+    List<Employee> allEmployees = this.employeeService.getCurrentEmployees();
+    return new ResponseEntity<>(allEmployees, HttpStatus.OK);
+  }
+
   @GetMapping("/{id}")
-  public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
-    Employee found = this.employeeService.getEmployeeById(id);
-    return new ResponseEntity<>(found, HttpStatus.OK);
+  public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) throws NotFoundException {
+    Optional<Employee> found = this.employeeService.getEmployeeById(id);
+    Employee result = found.orElseThrow(() -> new NotFoundException("Employee with Id " + id + " does not exist"));
+    return new ResponseEntity<>(result, HttpStatus.OK);
   }
 
-  @GetMapping("/{id}/leave")
-  public ResponseEntity<String> getAnnualLeaveByEmployeeId (@PathVariable Long id) {
-    String leaveAccumulated = this.employeeService.calculateLeave(id);
-    return new ResponseEntity<> (leaveAccumulated, HttpStatus.OK);
-  }
-
+  // Managers only
   @PostMapping()
-  public ResponseEntity<Employee> createEmployee (@RequestBody @Valid CreateEmployeeDTO data) {
+  // should throw invalid exception if unsuccessful
+  public ResponseEntity<Employee> createEmployee (@RequestBody @Valid CreateEmployeeDTO data){
     Employee newEmployee = this.employeeService.createEmployee(data);
     return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
   }
 
   @PatchMapping("/{id}")
+    // should throw invalid exception if unsuccessful
   public ResponseEntity<Employee> updateEmployee (@PathVariable Long id, @RequestBody @Valid UpdateEmployeeDTO data) {
 
     Employee updatedEmployee = this.employeeService.updateEmployee(id, data);
     return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
   }
 
+  // Managers only
   @DeleteMapping("/{id}")
+  // should throw invalid exception if unsuccessful
   public void deleteEmployee (@PathVariable Long id) {
     this.employeeService.deleteEmployee(id);
   }

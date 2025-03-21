@@ -88,6 +88,12 @@ import lombok.NoArgsConstructor;
   private Boolean on_probation = true;
 
   @Column
+  private Integer sick_days = 0;
+
+  @Column
+  private Double annual_leave_days;
+
+  @Column
   private Boolean deleted = false;
 
   @Column

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -25,35 +26,41 @@ public class EmployeeService {
     return this.repo.findAll();
   }
 
-  public Employee getEmployeeById(Long id) {
-    Optional<Employee> result = this.repo.findById(id);
-    if(result.isEmpty()){
-      return null;
-      // should throw an error when trying to access non-existing employee
-    }
-    return result.get();
+  public List<Employee> getCurrentEmployees() {
+    List<Employee> all = this.repo.findAll();
+    List<Employee> current = all.stream().filter((employee) -> employee.getDeleted().equals(false))
+        .collect(Collectors.toList());
+    return current;
+  }
+
+  public Optional<Employee> getEmployeeById(Long id) {
+    return this.repo.findById(id);
   }
 
   public Employee createEmployee(CreateEmployeeDTO data) {
     Employee newEmployee = mapper.map(data, Employee.class);
+    sick_days(newEmployee);
+    annual_leave(newEmployee);
     return this.repo.save(newEmployee);
-    // what if the employee email already exists? must handle error
   }
 
   public Employee updateEmployee(Long id, UpdateEmployeeDTO data) {
     Optional<Employee> result = this.repo.findById(id);
-    if(result.isEmpty()){
+    if (result.isEmpty()) {
       return null;
       // should throw an error when trying to access non-existing employee
     }
     Employee found = result.get();
     mapper.map(data, found);
+    sick_days(found);
+    annual_leave(found);
+    probation_period(found);
     return this.repo.save(found);
   }
 
   public void deleteEmployee(Long id) {
     Optional<Employee> result = this.repo.findById(id);
-    if(result.isEmpty()){
+    if (result.isEmpty()) {
       return;
     }
     Employee found = result.get();
@@ -61,28 +68,40 @@ public class EmployeeService {
     this.repo.save(found);
   }
 
-  public String calculateLeave(Long id) {
-    Optional<Employee> result = this.repo.findById(id);
-    if(result.isEmpty()){
-      return "Not found";
-    }
-    Employee found = result.get();
-    String leave = "";
+  public void sick_days(Employee employee) {
+    if(employee.getContract() == Contract.PART_TIME) { employee.setSick_days(4);}
+    if(employee.getContract() == Contract.FULL_TIME) { employee.setSick_days(10);}
+  }
 
-    if(found.getContract() == Contract.CASUAL || found.getContract() == Contract.PART_TIME) {
-      leave = "0";
-    }
+  public void annual_leave(Employee employee) {
 
-    // you gain 2.923 hours annual leave per week or 20 days per year (20 * 8 = 160hrs)
+    // only full time and part time accumulate leave
+    // you gain 2.923 hours annual leave per week or 20 days per year (20 * 8 =
+    // 160hrs)
     // the leave shouldn't roll over
-    if(found.getContract() == Contract.PART_TIME || found.getContract() == Contract.FULL_TIME) {
-      LocalDate start = LocalDate.parse(found.getStart_date());
+    if (employee.getContract() == Contract.PART_TIME || (employee.getContract() == Contract.FULL_TIME)) {
+      Integer current_year = LocalDate.now().getYear();
+      LocalDate year_start = LocalDate.parse(current_year + "-01-01");
       LocalDate today = LocalDate.now();
-      double weeksPassed = ChronoUnit.WEEKS.between(start, today);
-      leave = " " + (weeksPassed * 2.923);
+      double weeksPassed = ChronoUnit.WEEKS.between(year_start, today);
+      double acc = Math.floor(weeksPassed * 2.923)/8;
+      if(acc < 20.0) {
+        employee.setAnnual_leave_days(acc);
+      } else {
+        employee.setAnnual_leave_days(20.0);
+      }
     }
+  }
 
-    return leave;
+  // should auto update
+  public void probation_period (Employee employee) {
+    LocalDate today = LocalDate.now();
+    LocalDate contract_start = LocalDate.parse(employee.getStart_date());
+    double weeksPassed = ChronoUnit.WEEKS.between(contract_start, today);
+
+    if(weeksPassed > 12) {
+      employee.setOn_probation(false);
+    }
   }
 
 }
