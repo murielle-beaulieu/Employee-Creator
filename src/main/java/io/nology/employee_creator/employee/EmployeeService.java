@@ -33,13 +33,8 @@ public class EmployeeService {
     return current;
   }
 
-  public Employee getEmployeeById(Long id) {
-    Optional<Employee> result = this.repo.findById(id);
-    if (result.isEmpty()) {
-      return null;
-      // should throw an error when trying to access non-existing employee
-    }
-    return result.get();
+  public Optional<Employee> getEmployeeById(Long id) {
+    return this.repo.findById(id);
   }
 
   public Employee createEmployee(CreateEmployeeDTO data) {
@@ -47,7 +42,6 @@ public class EmployeeService {
     sick_days(newEmployee);
     annual_leave(newEmployee);
     return this.repo.save(newEmployee);
-    // what if the employee email already exists? must handle error
   }
 
   public Employee updateEmployee(Long id, UpdateEmployeeDTO data) {
