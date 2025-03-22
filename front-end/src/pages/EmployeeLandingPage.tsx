@@ -3,6 +3,7 @@ import { Employee, getEmployeeById, getEmployeeLeave } from "../../services/empl
 import { useParams } from "react-router";
 import { EmployeeDetails } from "../components/EmployeeDetails/EmployeeDetails";
 import { Header } from "../components/Header/Header";
+import { getAllLeaveRequests } from "../../services/leave-request-services";
 
 export const EmployeeLandingPage = () => {
   const { id = "x" } = useParams();
@@ -17,9 +18,11 @@ export const EmployeeLandingPage = () => {
     }
     )
     .catch((e) => console.log(e));
-  }, [id]);
 
-  console.log(employee?.first_name);
+    getAllLeaveRequests()
+    .then()
+    .catch((e)=> console.log(e));
+  }, [id]);
 
   return (
 		<>

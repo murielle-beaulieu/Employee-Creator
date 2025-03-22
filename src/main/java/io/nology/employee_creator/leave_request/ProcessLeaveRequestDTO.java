@@ -1,5 +1,7 @@
 package io.nology.employee_creator.leave_request;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,10 @@ public class ProcessLeaveRequestDTO {
   }
 
   private Long employeeId;
+
+  private LocalDate startDate;
+
+  private LocalDate endDate;
 
   private RequestType requestType;
 

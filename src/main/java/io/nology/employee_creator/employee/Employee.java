@@ -1,8 +1,8 @@
 package io.nology.employee_creator.employee;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.time.LocalDate;
 
 import io.nology.employee_creator.leave_request.LeaveRequest;
 import jakarta.persistence.Column;
@@ -16,8 +16,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -93,7 +93,13 @@ import lombok.NoArgsConstructor;
   private Double sick_days = 0.0;
 
   @Column
+  private Double sick_days_used = 0.0;
+
+  @Column
   private Double annual_leave_days = 0.0;
+
+  @Column
+  private Double annual_leave_days_used = 0.0;
 
   @Column
   private Boolean deleted = false;
