@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.nology.employee_creator.common.exceptions.NotFoundException;
 import jakarta.validation.Valid;
 
+
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -65,7 +66,7 @@ public class EmployeeController {
   // Managers only
   @DeleteMapping("/{id}")
   // should throw invalid exception if unsuccessful
-  public void deleteEmployee (@PathVariable Long id) {
+    public void deleteEmployee (@PathVariable Long id) {
     this.employeeService.deleteEmployee(id);
   }
 

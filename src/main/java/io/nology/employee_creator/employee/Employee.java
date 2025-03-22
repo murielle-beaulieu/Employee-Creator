@@ -1,7 +1,10 @@
 package io.nology.employee_creator.employee;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.time.LocalDate;
 
+import io.nology.employee_creator.leave_request.LeaveRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,13 +12,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -52,7 +54,7 @@ import lombok.NoArgsConstructor;
   private String last_name;
 
   @Column
-  private String dob; // yyyy-mm-dd
+  private LocalDate dob; // yyyy-mm-dd
 
   @Column
   private String phone_number;
@@ -70,10 +72,10 @@ import lombok.NoArgsConstructor;
   private String address; // must be australian
 
   @Column
-  private String start_date; // yyyy-mm-dd
+  private LocalDate start_date; // yyyy-mm-dd
 
   @Column
-  private String end_date; // yyyy-mm-dd
+  private LocalDate end_date; // yyyy-mm-dd
 
   @Column
   private String role;
@@ -88,32 +90,36 @@ import lombok.NoArgsConstructor;
   private Boolean on_probation = true;
 
   @Column
-  private Integer sick_days = 0;
+  private Double sick_days = 0.0;
 
   @Column
-  private Double annual_leave_days;
+  private Double annual_leave_days = 0.0;
 
   @Column
   private Boolean deleted = false;
 
   @Column
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
+  private Boolean on_leave = false;
+
+  @OneToMany(mappedBy="employee")
+  private List<LeaveRequest> leave_requests;
 
   @Column
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date updatedAt;
+  private LocalDateTime createdAt;
+
+  @Column
+  private LocalDateTime updatedAt;
 
   @PrePersist
   public void onCreate() {
-    Date timestamp = new Date();
+    LocalDateTime timestamp = LocalDateTime.now();
     createdAt = timestamp;
     updatedAt = timestamp;
   }
 
   @PreUpdate
   public void onUpdate() {
-    updatedAt = new Date();
+    updatedAt = LocalDateTime.now();
   }
 
 }

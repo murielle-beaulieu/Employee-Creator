@@ -1,6 +1,10 @@
 package io.nology.employee_creator.employee;
 
+import java.time.LocalDate;
+
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
@@ -29,12 +33,15 @@ public class CreateEmployeeDTO {
   @NotBlank
   private String last_name;
 
-  private String dob; // yyyy-mm-dd
+  private LocalDate dob;
 
+  @NotBlank
+  @Pattern(regexp = "^(\\+61|0)[2-9]{1}[0-9]{8}$", message = "Invalid Australian phone number")
   private String phone_number;
 
   @NotBlank
-  private String email; // email@address.com
+  @Email(message = "Invalid email address")
+  private String email;
 
   @NotBlank
   private String username;
@@ -44,9 +51,9 @@ public class CreateEmployeeDTO {
 
   private String address; // must be australian
 
-  private String start_date; // yyyy-mm-dd
+  private LocalDate start_date; // yyyy-mm-dd
 
-  private String end_date; // yyyy-mm-dd
+  private LocalDate end_date; // yyyy-mm-dd
 
   private String role;
 
@@ -56,7 +63,7 @@ public class CreateEmployeeDTO {
 
   private Boolean on_probation;
 
-  private Integer sick_days;
+  private Double sick_days;
 
   private Double annual_leave_days;
 
