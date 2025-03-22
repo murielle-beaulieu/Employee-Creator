@@ -36,11 +36,7 @@ public class LeaveRequest {
   public enum RequestType {
     ANNUAL,
     SICK,
-    PERSONAL,
-    COMPASSIONATE,
-    MATERNITY,
-    PATERNITY,
-    UNPAID
+    PERSONAL
   }
 
   public enum RequestStatus {

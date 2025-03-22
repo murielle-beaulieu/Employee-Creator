@@ -1,3 +1,5 @@
+import { LeaveRequest } from "./leave-request-services";
+
 enum Contract {
   CASUAL,
   CONTRACTOR,
@@ -15,24 +17,51 @@ enum Department {
   MANAGEMENT,
 }
 
+// export interface Employee {
+//   id: number,
+//   first_name: string,
+//   last_name: string,
+//   dob: string,
+//   username: string,
+//   email: string,
+//   password: string,
+//   phone_number: string,
+//   address: string,
+//   start_date: string,
+//   end_date: string | null,
+//   role: string,
+//   department: Department,
+//   contract: Contract,
+//   probation: boolean,
+//   createdAt: string,
+//   updatedAt: string,
+// }
+
 export interface Employee {
-  id: number,
-  first_name: string,
-  last_name: string,
-  dob: string,
-  username: string,
-  email: string,
-  password: string,
-  phone_number: string,
-  address: string,
-  start_date: string,
-  end_date: string | null,
-  role: string,
-  department: Department,
-  contract: Contract,
-  probation: boolean,
-  createdAt: string,
-  updatedAt: string,
+  id: number;
+  firstName: string;
+  lastName: string;
+  dob: string; // Date as string (yyyy-mm-dd)
+  phoneNumber: string;
+  email: string;
+  username: string;
+  password: string;
+  address: string; // Australian address format (you can validate format as needed)
+  startDate: string; // Date as string (yyyy-mm-dd)
+  endDate: string; // Date as string (yyyy-mm-dd)
+  role: string;
+  department: Department;
+  contract: Contract;
+  onProbation: boolean;
+  sickDays: number;
+  sickDaysUsed: number;
+  annualLeaveDays: number;
+  annualLeaveDaysUsed: number;
+  deleted: boolean;
+  onLeave: boolean;
+  leaveRequests: LeaveRequest[]; // List of leave requests
+  createdAt: string; // DateTime as string (yyyy-mm-ddTHH:mm:ss)
+  updatedAt: string; // DateTime as string (yyyy-mm-ddTHH:mm:ss)
 }
 
 
