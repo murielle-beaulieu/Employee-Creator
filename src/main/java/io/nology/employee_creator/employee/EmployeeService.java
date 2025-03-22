@@ -68,12 +68,12 @@ public class EmployeeService {
     this.repo.save(found);
   }
 
-  public void sick_days(Employee employee) {
-    if(employee.getContract() == Contract.PART_TIME) { employee.setSick_days(4);}
-    if(employee.getContract() == Contract.FULL_TIME) { employee.setSick_days(10);}
+  private void sick_days(Employee employee) {
+    if(employee.getContract() == Contract.PART_TIME) { employee.setSick_days((double) 4);}
+    if(employee.getContract() == Contract.FULL_TIME) { employee.setSick_days((double) 10);}
   }
 
-  public void annual_leave(Employee employee) {
+  private void annual_leave(Employee employee) {
 
     // only full time and part time accumulate leave
     // you gain 2.923 hours annual leave per week or 20 days per year (20 * 8 =
@@ -96,7 +96,7 @@ public class EmployeeService {
   // should auto update
   public void probation_period (Employee employee) {
     LocalDate today = LocalDate.now();
-    LocalDate contract_start = LocalDate.parse(employee.getStart_date());
+    LocalDate contract_start = employee.getStart_date();
     double weeksPassed = ChronoUnit.WEEKS.between(contract_start, today);
 
     if(weeksPassed > 12) {

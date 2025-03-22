@@ -54,7 +54,7 @@ import lombok.Data;
 
   private Boolean on_probation;
 
-  private Integer sick_days;
+  private Double sick_days;
 
   private Double annual_leave_days;
 
