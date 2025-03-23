@@ -1,74 +1,55 @@
+import { EmployeeFormData } from "../src/components/EmployeeForm/employee-schema";
 import { LeaveRequest } from "./leave-request-services";
 
-enum Contract {
-  CASUAL,
-  CONTRACTOR,
-  PART_TIME,
-  FULL_TIME,
+export enum Contract {
+  CASUAL = "CASUAL",
+  CONTRACTOR = "CONTRACTOR",
+  PART_TIME = "PART_TIME",
+  FULL_TIME = "FULL_TIME"
 }
 
-enum Department {
-  HOUSEKEEPING,
-  MAINTENANCE,
-  FRONT_DESK,
-  RESERVATIONS,
-  MARKETING,
-  ACCOUNTING,
-  MANAGEMENT,
+export enum Department {
+  HOUSEKEEPING = "HOUSEKEEPING ",
+  MAINTENANCE = "MAINTENANCE",
+  FRONT_DESK = "FRONT_DESK",
+  RESERVATIONS = "RESERVATIONS",
+  MARKETING = "MARKETING",
+  ACCOUNTING = "ACCOUNTING",
+  MANAGEMENT = "MANAGEMENT",
 }
-
-// export interface Employee {
-//   id: number,
-//   first_name: string,
-//   last_name: string,
-//   dob: string,
-//   username: string,
-//   email: string,
-//   password: string,
-//   phone_number: string,
-//   address: string,
-//   start_date: string,
-//   end_date: string | null,
-//   role: string,
-//   department: Department,
-//   contract: Contract,
-//   probation: boolean,
-//   createdAt: string,
-//   updatedAt: string,
-// }
 
 export interface Employee {
   id: number;
-  firstName: string;
-  lastName: string;
-  dob: string; // Date as string (yyyy-mm-dd)
-  phoneNumber: string;
+  first_name: string;
+  last_name: string;
+  dob: string;
+  phone_number: string;
   email: string;
   username: string;
   password: string;
-  address: string; // Australian address format (you can validate format as needed)
-  startDate: string; // Date as string (yyyy-mm-dd)
-  endDate: string; // Date as string (yyyy-mm-dd)
+  address: string;
+  start_date: string;
+  end_date: string;
   role: string;
   department: Department;
   contract: Contract;
-  onProbation: boolean;
-  sickDays: number;
-  sickDaysUsed: number;
-  annualLeaveDays: number;
-  annualLeaveDaysUsed: number;
+  on_probation: boolean;
+  sick_days: number;
+  sick_days_used: number;
+  annual_leave_days: number;
+  annual_leave_days_used: number;
   deleted: boolean;
   onLeave: boolean;
-  leaveRequests: LeaveRequest[]; // List of leave requests
-  createdAt: string; // DateTime as string (yyyy-mm-ddTHH:mm:ss)
-  updatedAt: string; // DateTime as string (yyyy-mm-ddTHH:mm:ss)
+  leave_requests: LeaveRequest[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 
 export const getAllEmployees = async () => {
   const response = await fetch("http://localhost:8080/employees");
   if (!response.ok) {
-    throw new Error("Failed to fetch");
+    throw new Error("Failed to fetch all employees");
   }
   return (await response.json()) as Employee[];
 }
@@ -76,7 +57,49 @@ export const getAllEmployees = async () => {
 export const getEmployeeById = async (id: string) => {
   const response = await fetch("http://localhost:8080/employees/" + id);
   if (!response.ok) {
-    throw new Error("Failed to fetch");
+    throw new Error("Failed to fetch employee by id");
   }
   return (await response.json()) as Employee;
 }
+
+export const createEmployee = async (data: EmployeeFormData) => {
+  const response = await fetch("http://localhost:8080/employees", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    }
+  })
+  if (!response.ok) {
+    throw new Error("Failed to create employee");
+  }
+  return (await response.json()) as Employee; // to navigate
+}
+
+export const updateEmployee = async (data: EmployeeFormData, id: string) => {
+  const response = await fetch("http://localhost:8080/employees/" + id, {
+    method: "PATCH",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    }
+  })
+  if (!response.ok) {
+    throw new Error("Failed to updated employee");
+  }
+  return (await response.json()) as Employee;
+}
+
+// export const processLeaveRequest = async (data: ProcessRequestFormData, id: string) => {
+//   const response = await fetch ("http://localhost:8080/leave_requests/" + id, {
+//     method: "PATCH",
+//     body: JSON.stringify(data),
+//     headers: {
+//       "Content-Type": "application/json",
+//     }
+//   })
+//   if (!response.ok) {
+//     throw new Error("Failed to process request ${response.status}");
+//   }
+//   return (await response.json()) as LeaveRequest;
+// }

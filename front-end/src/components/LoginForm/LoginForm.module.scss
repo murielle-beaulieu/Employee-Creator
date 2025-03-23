@@ -4,7 +4,8 @@ form {
   justify-content: center;
   width: 100%;
   gap: 1em;
-  height: 20em;
+  min-height: 20em;
+  height: grow;
   width: 20em;
   border: solid 1px rgb(190, 65, 65);
   color: black;

@@ -1,27 +1,27 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode} from "react";
 import { Employee, getAllEmployees } from "../../services/employee-services";
+import { useQuery } from '@tanstack/react-query'
 
-export const EmployeeContext = createContext({});
+export const EmployeeContext = createContext<Employee[]>([]);
 
 interface EmployeeContextProviderProps {
   children: ReactNode;
 }
 
 const EmployeeContextProvider = ({children}: EmployeeContextProviderProps) => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
 
-  const fetchEmployees = () => {
-      getAllEmployees()
-      .then((employees) => setEmployees(employees))
-      .catch((e) => console.log(e));
-    };
+    const {isPending, isError, data, error} = useQuery({queryKey: ['employees'], queryFn: getAllEmployees});
 
-    useEffect(() => {
-      fetchEmployees();
-    }, []);
+    if(isPending) {
+      return <span>Loading...</span>
+    }
+
+    if(isError) {
+      return <span>Error: {error.message}</span>
+    }
 
   return (
-    <EmployeeContext.Provider value={{employees, fetchEmployees}}>
+    <EmployeeContext.Provider value={data}>
       {children}
     </EmployeeContext.Provider>
   )

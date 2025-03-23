@@ -1,6 +1,5 @@
 package io.nology.employee_creator.employee;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data public class UpdateEmployeeDTO {
@@ -21,24 +20,22 @@ import lombok.Data;
     MANAGEMENT,
   }
 
-  @NotBlank
+
   private String first_name;
 
-  @NotBlank
   private String last_name;
 
   private String dob; // yyyy-mm-dd
 
   private String phone_number;
 
-  @NotBlank
   private String email; // email@address.com
 
-  @NotBlank
-  private String username;
+  // @NotBlank
+  // private String username;
 
-  @NotBlank
-  private String password;
+  // @NotBlank
+  // private String password;
 
   private String address; // must be australian
 
