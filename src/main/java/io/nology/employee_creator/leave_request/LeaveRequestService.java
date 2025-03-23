@@ -52,7 +52,6 @@ public class LeaveRequestService {
     newRequest.setEndDate(data.getEndDate());
     newRequest.setRequestType(data.getRequestType());
     newRequest.setRequestComment(data.getRequestComment());
-
     /* working on implementing mapper here */
     // mapper.map(data, LeaveRequest.class);
     // return this.repo.save(newRequest);

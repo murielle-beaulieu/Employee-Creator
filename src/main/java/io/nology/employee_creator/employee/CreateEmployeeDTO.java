@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
@@ -36,17 +35,14 @@ public class CreateEmployeeDTO {
   private LocalDate dob;
 
   @NotBlank
-  @Pattern(regexp = "^(\\+61|0)[2-9]{1}[0-9]{8}$", message = "Invalid Australian phone number")
+  // @Pattern(regexp = "^(\\+61|0)[2-9]{1}[0-9]{8}$", message = "Invalid Australian phone number")
   private String phone_number;
 
-  @NotBlank
   @Email(message = "Invalid email address")
   private String email;
 
-  @NotBlank
   private String username;
 
-  @NotBlank
   private String password; // use dob
 
   private String address; // must be australian

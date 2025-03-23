@@ -75,10 +75,10 @@ public class LeaveRequest {
   private RequestStatus status = RequestStatus.PENDING;
 
   @Column
-  private String reason;
+  private String requestComment;
 
   @Column
-  private String requestComment;
+  private String reason;
 
   @Column
   @Temporal(TemporalType.TIMESTAMP)

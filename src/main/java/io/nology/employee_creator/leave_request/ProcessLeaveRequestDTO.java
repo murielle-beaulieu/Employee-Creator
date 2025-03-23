@@ -1,7 +1,5 @@
 package io.nology.employee_creator.leave_request;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,8 +10,9 @@ import lombok.NoArgsConstructor;
 public class ProcessLeaveRequestDTO {
 
   public enum RequestStatus {
+    PENDING,
     APPROVED,
-    REJECTED,
+    DENIED,
     CANCELLED
   }
 
@@ -27,11 +26,11 @@ public class ProcessLeaveRequestDTO {
     UNPAID
   }
 
-  private Long employeeId;
+  private Long leaveId;
 
-  private LocalDate startDate;
+  // private LocalDate startDate;
 
-  private LocalDate endDate;
+  // private LocalDate endDate;
 
   private RequestType requestType;
 
