@@ -1,0 +1,26 @@
+nav {
+  width: 100%;
+  background-color: rgb(190, 65, 65);
+  height: 8em;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+}
+
+.medallion {
+  border-radius: 50%;
+  background-color: white;
+  height: 5em;
+  width: 5em;
+  margin: 1em;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  h2 {
+    color: rgb(190, 65, 65);
+    text-align: center;
+    font-size: 2.25em;
+    margin: auto;
+  }
+}

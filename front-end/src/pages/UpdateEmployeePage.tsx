@@ -4,6 +4,7 @@ import { Employee, getEmployeeById, updateEmployee } from "../../services/employ
 import { useEffect, useState } from "react";
 import UpdateEmployeeForm from "../components/EmployeeForm/UpdateEmployeeForm";
 import { UpdateEmployeeFormData } from "../components/EmployeeForm/update-employee-schema";
+import { NavBar } from "../components/NavBar/NavBar";
 
 export const UpdateEmployeePage = () => {
 	const [employee, setEmployee] = useState<Employee>({});
@@ -23,13 +24,14 @@ export const UpdateEmployeePage = () => {
 
    const updateEmployeeFormSubmit = (data: UpdateEmployeeFormData) => {
       updateEmployee(data, `${employee.id}`)
-        .then(() => console.log('super duper cool'))
+        .then()
         .catch((e) => console.log(e))
     }
 
 
 	return (
 		<>
+    <NavBar />
 			<h1>Update Employe #{id}</h1>
 			<UpdateEmployeeForm
 				onSubmit={updateEmployeeFormSubmit}

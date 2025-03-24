@@ -1,0 +1,21 @@
+.form {
+  border-radius: 1em;
+  padding: 3em;
+  margin: 0;
+  input {
+    width: 100%;
+    font-size: 1em;
+    border: 1px black solid;
+  }
+  select {
+    width: 101%;
+    font-size: 1em;
+    border: 1px black solid;
+  }
+
+  option {
+    width: 100%;
+    font-size: 1em;
+    border: 1px black solid;
+  }
+}

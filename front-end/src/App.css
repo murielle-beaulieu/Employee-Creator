@@ -6,6 +6,27 @@
   margin: 0 auto;
   padding: 2rem;
   width: 100%;
-  padding-top: 30em;
+  padding-top: 10em;
   height: auto;
+}
+
+summary {
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  width: 80em;
+  border: 1px solid black;
+  padding: 1em;
+  cursor: pointer;
+  &:hover {
+    h2 {
+      text-decoration: underline;
+     }
+  }
+}
+
+details[open] {
+  h2 {
+   text-decoration: underline;
+  }
 }

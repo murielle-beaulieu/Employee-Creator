@@ -31,14 +31,14 @@ export default function UpdateEmployeeForm({ onSubmit, currentDetails }: UpdateE
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label>First Name:</label>
-          <input type="text" defaultValue={currentDetails.first_name} {...register("first_name")} />
+          <input type="text"  defaultValue={currentDetails.first_name} {...register("first_name")} />
           {errors.first_name && (
             <small style={{ color: "red" }}>{errors.first_name.message}</small>
           )}
         </div>
         <div>
           <label>Last Name:</label>
-          <input type="text" {...register("last_name")} defaultValue={currentDetails.last_name} />
+          <input type="text" {...register("last_name")} defaultValue={currentDetails.last_name}/>
           {errors.last_name && (
             <small style={{ color: "red" }}>{errors.last_name.message}</small>
           )}

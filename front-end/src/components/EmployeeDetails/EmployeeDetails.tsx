@@ -11,9 +11,9 @@ export function EmployeeDetails({ data }: EmployeeDetailsProps) {
   const dob = data.dob;
   const address = data.address;
   const phone_number = data.phone_number;
-  const department = data.department;
+  const department = data.department.replace("_"," ").toLowerCase();
   const role = data.role;
-  const contract = data.contract;
+  const contract = data.contract.replace("_"," ").toLowerCase();
   const start_date = data.start_date;
 
 	return (

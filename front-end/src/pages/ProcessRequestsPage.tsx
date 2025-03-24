@@ -6,13 +6,13 @@ export const ProcessRequestPage = () => {
 
   const submitProcessedRequest = (data: ProcessRequestFormData ) => {
     processLeaveRequest(data, data.leaveId)
-      .then(() => console.log('weeheooo'))
+      .then()
       .catch((e) => console.log(e))
   }
 
   return (
     <>
-    <h1>Approve/Deny requests</h1>
+    <h1>Process Leave requests</h1>
     <ProcessRequestForm onSubmit={submitProcessedRequest}/>
     </>
   )

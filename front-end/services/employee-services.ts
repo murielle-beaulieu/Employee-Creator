@@ -45,6 +45,13 @@ export interface Employee {
   updatedAt: string;
 }
 
+export const getAllCurrentEmployees = async () => {
+  const response = await fetch("http://localhost:8080/employees/current");
+  if (!response.ok) {
+    throw new Error("Failed to fetch all employees");
+  }
+  return (await response.json()) as Employee[];
+}
 
 export const getAllEmployees = async () => {
   const response = await fetch("http://localhost:8080/employees");
@@ -62,6 +69,7 @@ export const getEmployeeById = async (id: string) => {
   return (await response.json()) as Employee;
 }
 
+
 export const createEmployee = async (data: EmployeeFormData) => {
   const response = await fetch("http://localhost:8080/employees", {
     method: "POST",
@@ -73,7 +81,7 @@ export const createEmployee = async (data: EmployeeFormData) => {
   if (!response.ok) {
     throw new Error("Failed to create employee");
   }
-  return (await response.json()) as Employee; // to navigate
+  return (await response.json()) as Employee;
 }
 
 export const updateEmployee = async (data: EmployeeFormData, id: string) => {
@@ -90,16 +98,14 @@ export const updateEmployee = async (data: EmployeeFormData, id: string) => {
   return (await response.json()) as Employee;
 }
 
-// export const processLeaveRequest = async (data: ProcessRequestFormData, id: string) => {
-//   const response = await fetch ("http://localhost:8080/leave_requests/" + id, {
-//     method: "PATCH",
-//     body: JSON.stringify(data),
-//     headers: {
-//       "Content-Type": "application/json",
-//     }
-//   })
-//   if (!response.ok) {
-//     throw new Error("Failed to process request ${response.status}");
-//   }
-//   return (await response.json()) as LeaveRequest;
-// }
+export const deleteEmployee = async (id: string) => {
+  const response = await fetch("http://localhost:8080/employees/" + id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  })
+  if (!response.ok) {
+    throw new Error("Failed to delete employee");
+  }
+}

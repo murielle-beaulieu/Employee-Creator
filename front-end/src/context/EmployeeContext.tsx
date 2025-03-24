@@ -1,30 +1,75 @@
-import { createContext, ReactNode} from "react";
-import { Employee, getAllEmployees } from "../../services/employee-services";
-import { useQuery } from '@tanstack/react-query'
-
-export const EmployeeContext = createContext<Employee[]>([]);
+import {
+	createContext,
+	ReactNode,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
+import { Employee, getAllCurrentEmployees } from "../../services/employee-services";
+import axios from "axios";
 
 interface EmployeeContextProviderProps {
-  children: ReactNode;
+	children: ReactNode;
 }
 
-const EmployeeContextProvider = ({children}: EmployeeContextProviderProps) => {
-
-    const {isPending, isError, data, error} = useQuery({queryKey: ['employees'], queryFn: getAllEmployees});
-
-    if(isPending) {
-      return <span>Loading...</span>
-    }
-
-    if(isError) {
-      return <span>Error: {error.message}</span>
-    }
-
-  return (
-    <EmployeeContext.Provider value={data}>
-      {children}
-    </EmployeeContext.Provider>
-  )
+interface EmployeeContextType {
+	allEmployees: Employee[];
+	currentEmployees: Employee[];
+	getCurrentEmployees: () => void;
+	fetchAllEmployees: () => void;
 }
+export const EmployeeContext = createContext<EmployeeContextType | undefined>(
+	undefined
+);
 
-export default EmployeeContextProvider;
+export const EmployeeContextProvider = ({
+	children,
+}: EmployeeContextProviderProps) => {
+	const [currentEmployees, setCurrentEmployees] = useState<Employee[]>([]);
+	const [allEmployees, setAllEmployees] = useState<Employee[]>([]);
+
+  const getCurrentEmployees = async () => {
+    try {
+      const data = await getAllCurrentEmployees();
+      setCurrentEmployees(data);
+    } catch (error) {
+      throw new Error( "Failed to retrieve all current employees (error:" + error + ")");
+    }
+  }
+
+	const fetchAllEmployees = async () => {
+		try {
+			const response = await axios.get<Employee[]>(
+				"http://localhost:8080/employees"
+			);
+			setAllEmployees(response.data);
+		} catch (error) {
+			throw new Error("Failed to retrieve all employees (error:" + error + ")");
+		}
+	};
+
+	useEffect(() => {
+		getCurrentEmployees();
+		fetchAllEmployees();
+	}, [currentEmployees]);
+
+	return (
+		<EmployeeContext.Provider
+			value={{
+				allEmployees,
+				currentEmployees,
+				getCurrentEmployees,
+				fetchAllEmployees,
+			}}>
+			{children}
+		</EmployeeContext.Provider>
+	);
+};
+
+export const useEmployees = (): EmployeeContextType => {
+	const context = useContext(EmployeeContext);
+	if (!context) {
+    throw new Error("Something went wrong");
+	}
+  	return context;
+};
