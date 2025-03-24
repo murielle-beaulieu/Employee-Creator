@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { EmployeeFormData } from "../src/components/EmployeeForm/employee-schema";
 import { LeaveRequest } from "./leave-request-services";
 
@@ -45,21 +47,31 @@ export interface Employee {
   updatedAt: string;
 }
 
-
 export const getAllEmployees = async () => {
-  const response = await fetch("http://localhost:8080/employees");
-  if (!response.ok) {
-    throw new Error("Failed to fetch all employees");
+  try {
+  const response = await axios.get<Employee[]>("http://localhost:8080/employees");
+  return response.data;
+  } catch (error) {
+    throw new Error("Failed to retrieve all employees (error:" + error + ")");
   }
-  return (await response.json()) as Employee[];
+}
+
+export const getAllCurrentEmployees = async () => {
+  try {
+  const response = await axios.get<Employee[]>("http://localhost:8080/employees/current");
+  return response.data;
+  } catch (error) {
+    throw new Error("Failed to retrieve all current employees(error:" + error + ")");
+  }
 }
 
 export const getEmployeeById = async (id: string) => {
-  const response = await fetch("http://localhost:8080/employees/" + id);
-  if (!response.ok) {
-    throw new Error("Failed to fetch employee by id");
-  }
-  return (await response.json()) as Employee;
+  try {
+    const response = await axios.get<Employee>("http://localhost:8080/employees/" + id);
+    return response.data;
+    } catch (error) {
+      throw new Error("Failed to retrieve all current employees(error:" + error + ")");
+    }
 }
 
 export const createEmployee = async (data: EmployeeFormData) => {
@@ -90,16 +102,14 @@ export const updateEmployee = async (data: EmployeeFormData, id: string) => {
   return (await response.json()) as Employee;
 }
 
-// export const processLeaveRequest = async (data: ProcessRequestFormData, id: string) => {
-//   const response = await fetch ("http://localhost:8080/leave_requests/" + id, {
-//     method: "PATCH",
-//     body: JSON.stringify(data),
-//     headers: {
-//       "Content-Type": "application/json",
-//     }
-//   })
-//   if (!response.ok) {
-//     throw new Error("Failed to process request ${response.status}");
-//   }
-//   return (await response.json()) as LeaveRequest;
-// }
+export const deleteEmployee = async (id: string) => {
+  const response = await fetch("http://localhost:8080/employees/" + id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  })
+  if (!response.ok) {
+    throw new Error("Failed to delete employee");
+  }
+}

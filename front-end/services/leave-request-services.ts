@@ -20,6 +20,7 @@ export interface LeaveRequest {
   endDate: string;
   reason: string;
   status: string;
+  requestType: string;
 }
 
 export const getAllLeaveRequests = async () => {

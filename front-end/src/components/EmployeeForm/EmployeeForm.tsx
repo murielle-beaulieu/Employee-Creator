@@ -2,12 +2,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { EmployeeFormData, schema } from "./employee-schema";
 import { Contract, Department } from "../../../services/employee-services";
+import { useNavigate } from "react-router";
 
 interface EmployeeFormProps {
 	onSubmit: (data: EmployeeFormData) => unknown;
 }
 
 export default function EmployeeForm({ onSubmit }: EmployeeFormProps) {
+
+  const navigate = useNavigate();
+
 	const {
 		handleSubmit,
 		register,
@@ -15,7 +19,7 @@ export default function EmployeeForm({ onSubmit }: EmployeeFormProps) {
 	} = useForm<EmployeeFormData>({ resolver: zodResolver(schema) });
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-	isSubmitSuccessful && console.log("sskjfeofkj!!!");
+	isSubmitSuccessful && navigate("/home/admin");
 
 	const contractList = Object.values(Contract);
   const dptList = Object.values(Department);
