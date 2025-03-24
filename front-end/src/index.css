@@ -13,14 +13,13 @@ body {
 }
 
 button {
-  padding: 1em 3em;
+  padding: 1em 2em;
   margin: 1em auto;
   background-color: rgb(190, 65, 65);
-  /* background-color: rgb(6, 83, 183); */
-  /* background-color: rgb(121, 188, 21); */
   color: white;
   border: none;
   border-radius: 1em;
+  margin: 0.5em;
 }
 
 a {

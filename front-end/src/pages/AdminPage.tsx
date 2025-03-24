@@ -6,7 +6,6 @@ import {
 	LeaveRequest,
 } from "../../services/leave-request-services";
 import { EmployeesList } from "../components/EmployeesList/EmployeesList";
-import { Link } from "react-router";
 import { RequestsList } from "../components/RequestsList/RequestsList";
 import styles from "./AdminPage.module.scss";
 

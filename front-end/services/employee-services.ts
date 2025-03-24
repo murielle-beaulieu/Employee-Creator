@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import { EmployeeFormData } from "../src/components/EmployeeForm/employee-schema";
 import { LeaveRequest } from "./leave-request-services";
 
@@ -47,32 +45,30 @@ export interface Employee {
   updatedAt: string;
 }
 
-export const getAllEmployees = async () => {
-  try {
-  const response = await axios.get<Employee[]>("http://localhost:8080/employees");
-  return response.data;
-  } catch (error) {
-    throw new Error("Failed to retrieve all employees (error:" + error + ")");
+export const getAllCurrentEmployees = async () => {
+  const response = await fetch("http://localhost:8080/employees/current");
+  if (!response.ok) {
+    throw new Error("Failed to fetch all employees");
   }
+  return (await response.json()) as Employee[];
 }
 
-export const getAllCurrentEmployees = async () => {
-  try {
-  const response = await axios.get<Employee[]>("http://localhost:8080/employees/current");
-  return response.data;
-  } catch (error) {
-    throw new Error("Failed to retrieve all current employees(error:" + error + ")");
+export const getAllEmployees = async () => {
+  const response = await fetch("http://localhost:8080/employees");
+  if (!response.ok) {
+    throw new Error("Failed to fetch all employees");
   }
+  return (await response.json()) as Employee[];
 }
 
 export const getEmployeeById = async (id: string) => {
-  try {
-    const response = await axios.get<Employee>("http://localhost:8080/employees/" + id);
-    return response.data;
-    } catch (error) {
-      throw new Error("Failed to retrieve all current employees(error:" + error + ")");
-    }
+  const response = await fetch("http://localhost:8080/employees/" + id);
+  if (!response.ok) {
+    throw new Error("Failed to fetch employee by id");
+  }
+  return (await response.json()) as Employee;
 }
+
 
 export const createEmployee = async (data: EmployeeFormData) => {
   const response = await fetch("http://localhost:8080/employees", {
@@ -85,7 +81,7 @@ export const createEmployee = async (data: EmployeeFormData) => {
   if (!response.ok) {
     throw new Error("Failed to create employee");
   }
-  return (await response.json()) as Employee; // to navigate
+  return (await response.json()) as Employee;
 }
 
 export const updateEmployee = async (data: EmployeeFormData, id: string) => {

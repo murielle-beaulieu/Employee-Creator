@@ -24,7 +24,7 @@ export const UpdateEmployeePage = () => {
 
    const updateEmployeeFormSubmit = (data: UpdateEmployeeFormData) => {
       updateEmployee(data, `${employee.id}`)
-        .then(() => console.log('super duper cool'))
+        .then()
         .catch((e) => console.log(e))
     }
 

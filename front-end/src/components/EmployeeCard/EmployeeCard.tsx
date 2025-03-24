@@ -9,17 +9,18 @@ interface EmployeeCardProps {
 
 export function EmployeeCard({ data }: EmployeeCardProps) {
 
-const {fetchCurrentEmployees} = useEmployees()
+const {getCurrentEmployees} = useEmployees()
 
 	const handleDelete = () => {
 		if (
 			confirm("You're about to delete this employee, do you want to go ahead?")
 		) {
       deleteEmployee(`${data.id}`)
-      .then(() => fetchCurrentEmployees())
+      .then(() => getCurrentEmployees())
       .catch((e) => console.log(e))
 		}
 	};
+
 
   const dpt = (data.department).replace("_"," ").toLowerCase();
   const contract = (data.contract).replace("_"," ").toLowerCase();

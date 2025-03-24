@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { EmployeeFormData, schema } from "./employee-schema";
 import { Contract, Department } from "../../../services/employee-services";
 import { useNavigate } from "react-router";
+import styles from "./Form.module.scss";
 
 interface EmployeeFormProps {
 	onSubmit: (data: EmployeeFormData) => unknown;
@@ -26,7 +27,7 @@ export default function EmployeeForm({ onSubmit }: EmployeeFormProps) {
 
 	return (
 		<article>
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
 				<div>
 					<label>First Name:</label>
 					<input type="text" {...register("first_name")} />

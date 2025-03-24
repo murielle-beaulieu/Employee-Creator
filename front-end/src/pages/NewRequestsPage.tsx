@@ -7,7 +7,7 @@ export const NewRequestsPage = () => {
 
   const requestFormSubmit = (data: NewRequestFormData) => {
     createLeaveRequest(data)
-    .then(()=>console.log('yippeeee'))
+    .then()
     .catch((e)=> console.log(e))
     console.log(data);
   };
