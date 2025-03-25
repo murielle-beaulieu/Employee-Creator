@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { schema } from "./employee-schema";
 import { Contract, Department, Employee} from "../../../services/employee-services";
 import { UpdateEmployeeFormData } from "./update-employee-schema";
+import styles from "./Form.module.scss";
 
 interface UpdateEmployeeFormProps {
   onSubmit: (data: UpdateEmployeeFormData) => unknown;
@@ -21,14 +22,10 @@ export default function UpdateEmployeeForm({ onSubmit, currentDetails }: UpdateE
 
   const contractList = Object.values(Contract);
   const dptList = Object.values(Department);
-
-  console.log(currentDetails.department);
-  console.log(currentDetails.contract);
-
-
+  
   return (
     <article>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div>
           <label>First Name:</label>
           <input type="text"  defaultValue={currentDetails.first_name} {...register("first_name")} />

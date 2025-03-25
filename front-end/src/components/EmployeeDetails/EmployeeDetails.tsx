@@ -15,7 +15,9 @@ export function EmployeeDetails({ data }: EmployeeDetailsProps) {
   const role = data.role;
   const contract = data.contract.replace("_"," ").toLowerCase();
   const start_date = data.start_date;
-
+  const sick_days = data.sick_days
+  const annual_leave = data.annual_leave_days
+  const leave_used = data.annual_leave_days_used;
 	return (
 		<div className={styles.employee_details_main}>
 			<section>
@@ -31,6 +33,9 @@ export function EmployeeDetails({ data }: EmployeeDetailsProps) {
         <p>Department: {department}</p>
         <p>Role title: {role}</p>
         <p>Contract: {contract} </p>
+        <p>Sick days available: {sick_days}</p>
+        <p>Annual leave available: {annual_leave}</p>
+        <p>Annual leave used: {leave_used}</p>
       </section>
 		</div>
 	);

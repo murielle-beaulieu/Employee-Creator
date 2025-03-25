@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import styles from "./EmployeeCard.module.scss";
 import { deleteEmployee, Employee } from "../../../services/employee-services";
 import { useEmployees } from "../../context/EmployeeContext";
+import { useState } from "react";
+import { SidePanel } from "../SidePanel/SidePanel";
 
 interface EmployeeCardProps {
 	data: Employee;
@@ -10,6 +12,7 @@ interface EmployeeCardProps {
 export function EmployeeCard({ data }: EmployeeCardProps) {
 
 const {getCurrentEmployees} = useEmployees()
+const [open, setOpen] = useState(false);
 
 	const handleDelete = () => {
 		if (
@@ -21,12 +24,15 @@ const {getCurrentEmployees} = useEmployees()
 		}
 	};
 
-
   const dpt = (data.department).replace("_"," ").toLowerCase();
   const contract = (data.contract).replace("_"," ").toLowerCase();
 
+  const show = () => {
+    setOpen(!open);
+  }
 
 	return (
+    <>
 		<section className={styles.card} key={data.id}>
       <div className={styles.employee}>
         <h3> {data.first_name} {data.last_name}</h3>
@@ -37,7 +43,7 @@ const {getCurrentEmployees} = useEmployees()
         <p>Contract type: {contract}</p>
       </div>
       <div className={styles.options}>
-      <Link to={`/home/profile/${data.id}`}><button>See More</button></Link>
+      <button onClick={() => show()}>{open ? "See Less" : "See More"}</button>
       {data.deleted ? <span></span> :
       <>
         <button className={styles.edit}>
@@ -50,5 +56,7 @@ const {getCurrentEmployees} = useEmployees()
         }
       </div>
 		</section>
+    {open && <SidePanel data={data}/>}
+    </>
 	);
 }

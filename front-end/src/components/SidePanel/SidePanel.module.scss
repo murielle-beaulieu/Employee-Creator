@@ -1,0 +1,18 @@
+.panel {
+    position: fixed;
+    top: 6em;
+    right: 0;
+    height: 100%;
+    width: 30em;
+    background-color: rgb(204, 54, 54);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    padding-top: 4em;
+    div {
+        margin: 3em;
+    }
+    text-transform: capitalize;
+}
+

@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { NewRequestFormData, schema } from "./new-request-schema";
 import { RequestType } from "../../../services/leave-request-services";
 import { useParams } from "react-router";
+import styles from '../EmployeeForm/Form.module.scss';
 
 interface RequestFormProps {
 	onSubmit: (data: NewRequestFormData) => unknown;
@@ -24,7 +25,7 @@ export default function NewRequestForm({ onSubmit }: RequestFormProps) {
 
 	return (
 		<article>
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
 				<input
 					type="hidden"
 					defaultValue={id}

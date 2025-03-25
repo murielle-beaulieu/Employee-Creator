@@ -7,6 +7,8 @@ interface EmployeesListProps {
 
 export function EmployeesList({ data }: EmployeesListProps) {
 
+	console.log(data);
+
 	return (
 		<section>
 			{data.map((employee: Employee) => {
