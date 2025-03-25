@@ -4,14 +4,17 @@ import { NavBar } from "../components/NavBar/NavBar";
 import NewRequestForm from "../components/NewRequestForm/NewRequestForm";
 import { NewRequestFormData } from "../components/NewRequestForm/new-request-schema";
 import styles from "./PagesStyling.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export const NewRequestsPage = () => {
+
+  const { id = '' } = useParams();
   const [errors, setErrors] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const requestFormSubmit = (data: NewRequestFormData) => {
     createLeaveRequest(data)
-      .then()
+      .then(() => navigate(`/home/profile/${id}`))
       .catch((e) => setErrors(e));
     console.log(data);
   };
@@ -20,11 +23,11 @@ export const NewRequestsPage = () => {
     <>
       <NavBar />
       <div className={styles.navigation}>
-        <Link to="/home/admin">
-          <button>Back to admin</button>
+        <Link to={`/home/profile/${id}`}>
+          <button>Back to profile</button>
         </Link>
       </div>
-      <h1>Leave Requests</h1>
+      <h1>Leave Request</h1>
       {errors && <small style={{ color: "red" }}>{errors}</small>}
       <NewRequestForm onSubmit={requestFormSubmit} />
     </>

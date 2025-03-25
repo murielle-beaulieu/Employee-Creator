@@ -48,13 +48,12 @@ public class EmployeeService {
     Optional<Employee> result = this.repo.findById(id);
     if (result.isEmpty()) {
       return null;
-      // should throw an error when trying to access non-existing employee
     }
     Employee found = result.get();
     mapper.map(data, found);
     sick_days(found);
     annual_leave(found);
-    probation_period(found);
+    // probation_period(found);
     return this.repo.save(found);
   }
 
@@ -93,7 +92,6 @@ public class EmployeeService {
     }
   }
 
-  // should auto update
   public void probation_period (Employee employee) {
     LocalDate today = LocalDate.now();
     LocalDate contract_start = employee.getStart_date();

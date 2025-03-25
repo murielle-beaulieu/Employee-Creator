@@ -17,9 +17,6 @@ export default function UpdateEmployeeForm({ onSubmit, currentDetails }: UpdateE
     formState: { errors },
   } = useForm<UpdateEmployeeFormData>({ resolver: zodResolver(schema) });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  // isSubmitSuccessful && console.log("sskjfeofkj!!!");
-
   const contractList = Object.values(Contract);
   const dptList = Object.values(Department);
   

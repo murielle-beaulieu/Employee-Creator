@@ -10,14 +10,14 @@ interface RequestCardProps {
 
 export function RequestCard ({request}: RequestCardProps) {
 
-  const emId = request.id;
+  const emId = request.employee;
   const [emp,setEmp] = useState<Employee>();
 
   useEffect(() => {
   getEmployeeById(`${emId}`)
   .then((em) => setEmp(em))
   .catch((e)=>console.log(e))
-},[])
+},[emId])
 
 const requestedBy = emp?.first_name +" "+ emp?.last_name;
 
@@ -29,7 +29,7 @@ const requestedBy = emp?.first_name +" "+ emp?.last_name;
         <p>Request type: {request.requestType}</p>
         <p>Start date: {request.startDate}</p>
         <p>End date: {request.endDate}</p>
-        <p>Request Comment: {request.reason}</p>
+        <p>Request Comment: {request.requestComment}</p>
         <Link to={`requests/${request.id}`}><button>Process request</button></Link>
       </article>
     </section>

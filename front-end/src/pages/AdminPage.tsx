@@ -14,16 +14,16 @@ import { Link } from "react-router-dom";
 export const AdminPage = () => {
   const { currentEmployees, allEmployees } = useEmployees();
   const [display, setDisplay] = useState<Employee[] | LeaveRequest[] | null>(
-	null
+    currentEmployees
   );
 
   const [allLeaveRequests, setAllLeaveRequests] = useState<LeaveRequest[]>([]);
 
   useEffect(() => {
+    setDisplay(currentEmployees);
     getAllLeaveRequests()
       .then((leaveRequests) => setAllLeaveRequests(leaveRequests))
       .catch((e) => console.log(e));
-	  setDisplay(currentEmployees)
   }, []);
 
   return (
@@ -43,26 +43,24 @@ export const AdminPage = () => {
         <button onClick={() => setDisplay(allLeaveRequests)}>
           See Leave Requests
         </button>
+        <Link to="/home/profile/3">
+          <button className={styles.close}>Go back to Profile</button>
+        </Link>
 
-        {display == currentEmployees && 
+
+        {display == currentEmployees && (
           <div className={styles.display}>
             <section className={styles.head}>
               <h2>Current Employees</h2>
-              <button onClick={() => setDisplay(null)} className={styles.close}>
-                Close
-              </button>
             </section>
             <EmployeesList data={currentEmployees} />
           </div>
-        }
+        )}
 
         {display == allEmployees && (
           <div className={styles.display}>
             <section className={styles.head}>
               <h2>All Employees</h2>
-              <button onClick={() => setDisplay(null)} className={styles.close}>
-                Close
-              </button>
             </section>
             <EmployeesList data={allEmployees} />
           </div>
@@ -72,9 +70,6 @@ export const AdminPage = () => {
           <div className={styles.display}>
             <section className={styles.head}>
               <h2>All Leave Requests</h2>
-              <button onClick={() => setDisplay(null)} className={styles.close}>
-                Close
-              </button>
             </section>
             <RequestsList data={allLeaveRequests} />
           </div>

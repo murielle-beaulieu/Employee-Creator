@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import {
   Employee,
   getEmployeeById,
@@ -11,11 +11,15 @@ import { UpdateEmployeeFormData } from "../components/EmployeeForm/update-employ
 import { NavBar } from "../components/NavBar/NavBar";
 
 import styles from "./PagesStyling.module.scss";
+import { useEmployees } from "../context/EmployeeContext";
 
 export const UpdateEmployeePage = () => {
-  const [employee, setEmployee] = useState<Employee>({});
+  const { setCurrentEmployees, setAllEmployees } = useEmployees();
 
-  const { id = x } = useParams();
+  const [employee, setEmployee] = useState<Employee>({});
+  const { id = "" } = useParams();
+
+  const navigate = useNavigate();
 
   const employeeToUpdate = (id: string) => {
     getEmployeeById(id)
@@ -26,27 +30,34 @@ export const UpdateEmployeePage = () => {
   useEffect(() => {
     employeeToUpdate(id);
   }, [id]);
-  console.log(employee.first_name);
 
   const updateEmployeeFormSubmit = (data: UpdateEmployeeFormData) => {
     updateEmployee(data, `${employee.id}`)
-      .then()
+      .then((res) => {
+        setCurrentEmployees((prev: any) => [...prev, res]);
+        setAllEmployees((prev: any) => [...prev, res]);
+        navigate("/home/admin");
+      })
       .catch((e) => console.log(e));
   };
 
   return (
     <>
       <NavBar />
-	  <div className={styles.navigation}>
+      <div className={styles.navigation}>
         <Link to="/home/admin">
           <button>Back to admin</button>
         </Link>
       </div>
-      <h1>Update {employee.first_name}'s details</h1>
-      <UpdateEmployeeForm
-        onSubmit={updateEmployeeFormSubmit}
-        currentDetails={employee}
-      />
+      {employee && (
+        <>
+          <h1>Update {employee.first_name}'s details</h1>
+          <UpdateEmployeeForm
+            onSubmit={updateEmployeeFormSubmit}
+            currentDetails={employee}
+          />
+        </>
+      )}
     </>
   );
 };
