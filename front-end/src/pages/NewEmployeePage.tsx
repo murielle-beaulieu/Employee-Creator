@@ -7,7 +7,6 @@ import { useEmployees } from "../context/EmployeeContext";
 import styles from "./PagesStyling.module.scss";
 
 export const NewEmployeePage = () => {
-	
   const { setCurrentEmployees, setAllEmployees } = useEmployees();
 
   const navigate = useNavigate();
@@ -15,8 +14,10 @@ export const NewEmployeePage = () => {
   const newEmployeeFormSubmit = (data: EmployeeFormData) => {
     createEmployee(data)
       .then((res) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setCurrentEmployees((prev: any) => [...prev, res]);
-		setAllEmployees((prev: any) => [...prev, res]);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setAllEmployees((prev: any) => [...prev, res]);
         navigate("/home/admin");
       })
       .catch((e) => console.log(e));
@@ -26,10 +27,12 @@ export const NewEmployeePage = () => {
 
   return (
     <>
-      <NavBar/>
-	  <div className={styles.navigation}>
-	 	<Link to="/home/admin"><button>Back to admin</button></Link>
-	  </div>
+      <NavBar />
+      <div className={styles.navigation}>
+        <Link to="/home/admin">
+          <button>Back to admin</button>
+        </Link>
+      </div>
       <h1>Create new employee</h1>
       <EmployeeForm onSubmit={newEmployeeFormSubmit} />
     </>

@@ -43,7 +43,7 @@ export const AdminPage = () => {
         <button onClick={() => setDisplay(allLeaveRequests)}>
           See Leave Requests
         </button>
-        <Link to="/home/profile/3">
+        <Link to="/home/profile/1">
           <button className={styles.close}>Go back to Profile</button>
         </Link>
 

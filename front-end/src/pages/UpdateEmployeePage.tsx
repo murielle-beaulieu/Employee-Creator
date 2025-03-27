@@ -34,7 +34,9 @@ export const UpdateEmployeePage = () => {
   const updateEmployeeFormSubmit = (data: UpdateEmployeeFormData) => {
     updateEmployee(data, `${employee.id}`)
       .then((res) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setCurrentEmployees((prev: any) => [...prev, res]);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setAllEmployees((prev: any) => [...prev, res]);
         navigate("/home/admin");
       })

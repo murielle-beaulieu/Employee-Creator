@@ -78,6 +78,8 @@ public class EmployeeService {
     // you gain 2.923 hours annual leave per week or 20 days per year (20 * 8 =
     // 160hrs)
     // the leave shouldn't roll over
+    // the leave period starts from jan 1st
+
     if (employee.getContract() == Contract.PART_TIME || (employee.getContract() == Contract.FULL_TIME)) {
       Integer current_year = LocalDate.now().getYear();
       LocalDate year_start = LocalDate.parse(current_year + "-01-01");

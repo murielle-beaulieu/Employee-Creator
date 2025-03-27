@@ -24,7 +24,7 @@ export function SidePanel({ data }: SidePanelProps) {
         <h3>Contact</h3>
         <h2>{full_name}</h2>
         <p>Phone number: {phone_number}</p>
-        <p>Email: {email}</p>
+        <p className={styles.email}>Email: {email}</p>
       </div>
       <div>
       <h3>Role details</h3>
@@ -40,28 +40,3 @@ export function SidePanel({ data }: SidePanelProps) {
     </section>
   );
 }
-
-// id: number;
-//   first_name: string;
-//   last_name: string;
-//   dob: string;
-//   phone_number: string;
-//   email: string;
-//   username: string;
-//   password: string;
-//   address: string;
-//   start_date: string;
-//   end_date: string;
-//   role: string;
-//   department: Department;
-//   contract: Contract;
-//   on_probation: boolean;
-//   sick_days: number;
-//   sick_days_used: number;
-//   annual_leave_days: number;
-//   annual_leave_days_used: number;
-//   deleted: boolean;
-//   onLeave: boolean;
-//   leave_requests: LeaveRequest[];
-//   createdAt: string;
-//   updatedAt: string;
