@@ -1,0 +1,50 @@
+.admin {
+    width: 100%;
+    margin: auto;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.display {
+  margin: 4em 0;
+  h2 {
+    font-weight: 300;
+    font-style: italic;
+  }
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    button {
+        margin: 0.5em 2em 1.5em 0;
+    }
+}
+
+.navigation {
+  align-self: flex-end;
+  margin-right: 6em;
+  button {
+    border: 1px solid rgb(204, 54, 54);
+    color: rgb(204, 54, 54);
+    background-color: white;
+    &:hover {
+      transition: 0.3s ease-in;
+      background-color: rgb(204, 54, 54);
+      color: white;
+    }
+  }
+}
+
+.close {
+  border: 1px solid rgb(204, 54, 54);
+  color: rgb(204, 54, 54);
+  background-color: white;
+  &:hover {
+    transition: 0.3s ease-in;
+    background-color: rgb(204, 54, 54);
+    color: white;
+  }
+}

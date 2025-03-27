@@ -48,13 +48,12 @@ public class EmployeeService {
     Optional<Employee> result = this.repo.findById(id);
     if (result.isEmpty()) {
       return null;
-      // should throw an error when trying to access non-existing employee
     }
     Employee found = result.get();
     mapper.map(data, found);
     sick_days(found);
     annual_leave(found);
-    probation_period(found);
+    // probation_period(found);
     return this.repo.save(found);
   }
 
@@ -79,6 +78,8 @@ public class EmployeeService {
     // you gain 2.923 hours annual leave per week or 20 days per year (20 * 8 =
     // 160hrs)
     // the leave shouldn't roll over
+    // the leave period starts from jan 1st
+
     if (employee.getContract() == Contract.PART_TIME || (employee.getContract() == Contract.FULL_TIME)) {
       Integer current_year = LocalDate.now().getYear();
       LocalDate year_start = LocalDate.parse(current_year + "-01-01");
@@ -93,7 +94,6 @@ public class EmployeeService {
     }
   }
 
-  // should auto update
   public void probation_period (Employee employee) {
     LocalDate today = LocalDate.now();
     LocalDate contract_start = employee.getStart_date();

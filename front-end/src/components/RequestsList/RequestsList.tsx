@@ -7,11 +7,10 @@ interface RequestsListProps {
 }
 
 export function RequestsList({ data }: RequestsListProps) {
-
   return (
     <main className={styles.requests}>
       {data.map((request: LeaveRequest) => {
-        return <RequestCard request={request}/>;
+        return <RequestCard request={request} />;
       })}
     </main>
   );

@@ -6,12 +6,13 @@
 }
 
 .header {
-  background-color: rgb(190, 65, 65);
+  background-color: rgb(204, 54, 54);
   position: fixed;
   top: 0;
   left: 0;
-  height: 25em;
+  height: 17em;
   width: 100%;
+  border-radius: 0;
 }
 
 .medallion {
@@ -20,12 +21,12 @@
   justify-content: center;
   align-content: center;
   position: fixed;
-  top: 20em;
+  top: 12em;
   height: 10em;
   width: 10em;
   border-radius: 50%;
-  border: 1px solid rgb(190, 65, 65);
-  color: rgb(190, 65, 65);
+  border: 1px solid rgb(204, 54, 54);
+  color: rgb(204, 54, 54);
   background-color: white;
 
   h2 {

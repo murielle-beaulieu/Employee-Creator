@@ -1,11 +1,13 @@
 import {
 	createContext,
+	Dispatch,
 	ReactNode,
+	SetStateAction,
 	useContext,
 	useEffect,
 	useState,
 } from "react";
-import { Employee, getAllCurrentEmployees } from "../../services/employee-services";
+import { Employee} from "../../services/employee-services";
 import axios from "axios";
 
 interface EmployeeContextProviderProps {
@@ -15,6 +17,8 @@ interface EmployeeContextProviderProps {
 interface EmployeeContextType {
 	allEmployees: Employee[];
 	currentEmployees: Employee[];
+	setCurrentEmployees: Dispatch<SetStateAction<Employee[]>>;
+	setAllEmployees: Dispatch<SetStateAction<Employee[]>>;
 	getCurrentEmployees: () => void;
 	fetchAllEmployees: () => void;
 }
@@ -29,13 +33,15 @@ export const EmployeeContextProvider = ({
 	const [allEmployees, setAllEmployees] = useState<Employee[]>([]);
 
   const getCurrentEmployees = async () => {
-    try {
-      const data = await getAllCurrentEmployees();
-      setCurrentEmployees(data);
-    } catch (error) {
-      throw new Error( "Failed to retrieve all current employees (error:" + error + ")");
-    }
-  }
+	try {
+		const response = await axios.get<Employee[]>(
+			"http://localhost:8080/employees/current"
+		);
+		setCurrentEmployees(response.data);
+	} catch (error) {
+		throw new Error("Failed to retrieve all current employees (error:" + error + ")");
+	}
+};
 
 	const fetchAllEmployees = async () => {
 		try {
@@ -51,7 +57,7 @@ export const EmployeeContextProvider = ({
 	useEffect(() => {
 		getCurrentEmployees();
 		fetchAllEmployees();
-	}, [currentEmployees]);
+	}, []);
 
 	return (
 		<EmployeeContext.Provider
@@ -60,6 +66,8 @@ export const EmployeeContextProvider = ({
 				currentEmployees,
 				getCurrentEmployees,
 				fetchAllEmployees,
+				setCurrentEmployees,
+				setAllEmployees
 			}}>
 			{children}
 		</EmployeeContext.Provider>

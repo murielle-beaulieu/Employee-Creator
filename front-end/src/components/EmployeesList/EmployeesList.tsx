@@ -11,7 +11,7 @@ export function EmployeesList({ data }: EmployeesListProps) {
 		<section>
 			{data.map((employee: Employee) => {
 				return <EmployeeCard data={employee} key={employee.id}/>;
-			})}
+			}).reverse()}
 		</section>
 	);
 }

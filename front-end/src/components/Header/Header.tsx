@@ -1,7 +1,11 @@
 import { Employee } from "../../../services/employee-services";
 import styles from "./Header.module.scss";
 
-export function Header({data} : Employee) {
+interface HeaderProps {
+  data: Employee;
+}
+
+export function Header({data} : HeaderProps) {
 
   const initials = data.first_name[0] + data.last_name[0] ;
 

@@ -5,7 +5,7 @@ export const schema = z.object({
   last_name: z.string().min(2, {message: "Please enter your last first name"}),
   dob: z.string(),
   phone_number: z.string().regex(/^(?:\+61|0)[2-478]{1}[0-9]{8}$/, {
-    message: 'Invalid Australian phone number format',
+    message: 'Invalid Australian phone number format - (no spaces)',
   }),
   email: z.string().email(),
   address: z.string(),

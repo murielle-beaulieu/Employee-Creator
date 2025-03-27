@@ -16,10 +16,12 @@ export enum RequestStatus {
 
 export interface LeaveRequest {
   id: number;
+  employee: number;
   startDate: string;
   endDate: string;
   reason: string;
   status: string;
+  requestComment: string
   requestType: string;
 }
 
