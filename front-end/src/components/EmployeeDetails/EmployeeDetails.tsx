@@ -16,8 +16,9 @@ export function EmployeeDetails({ data }: EmployeeDetailsProps) {
   const contract = data.contract.replace("_"," ").toLowerCase();
   const start_date = data.start_date;
   const sick_days = data.sick_days
-  const annual_leave = data.annual_leave_days
+  const annual_leave = data.annual_leave_days - data.annual_leave_days_used;
   const leave_used = data.annual_leave_days_used;
+  
 	return (
 		<div className={styles.employee_details_main}>
 			<section>
