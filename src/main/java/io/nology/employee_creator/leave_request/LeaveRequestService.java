@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import io.nology.employee_creator.common.exceptions.InvalidRequestException;
 import io.nology.employee_creator.employee.Employee;
 import io.nology.employee_creator.employee.EmployeeRepository;
+import io.nology.employee_creator.leave_request.LeaveRequest.RequestStatus;
 import io.nology.employee_creator.leave_request.LeaveRequest.RequestType;
 
 @Service
@@ -82,6 +83,12 @@ public class LeaveRequestService {
     //   Employee employee = employeeRepo.findById(data.getEmployeeId()).get();
     //   employee.setAnnual_leave_days_used((double)ChronoUnit.DAYS.between(data.getStartDate(), data.getEndDate()));
     // }
+
+    Employee employee = result.getEmployee();
+
+    if (result.getStatus()  == RequestStatus.APPROVED && result.getRequestType() == RequestType.ANNUAL) {
+      employee.setAnnual_leave_days_used(result.getTotalRequested());
+    }
 
     mapper.map(data, result);
     return this.repo.save(result);

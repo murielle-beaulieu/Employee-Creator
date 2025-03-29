@@ -2,6 +2,7 @@ package io.nology.employee_creator.leave_request;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
@@ -22,9 +23,11 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "leave_requests")
@@ -51,8 +54,9 @@ public class LeaveRequest {
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name="employee_id", nullable = false)
-  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+  @JoinColumn(name = "employee_id", nullable = false)
+  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id") // to avoid circular
+                                                                                             // referencing
   @JsonIdentityReference(alwaysAsId = true)
   private Employee employee;
 
@@ -65,6 +69,10 @@ public class LeaveRequest {
 
   @Column
   private LocalDate endDate;
+
+  @Column
+  @Setter(AccessLevel.NONE)
+  private Double totalRequested;
 
   @Enumerated(EnumType.STRING)
   @Column
@@ -94,11 +102,16 @@ public class LeaveRequest {
     createdAt = timestamp;
     updatedAt = timestamp;
     requestDate = timestamp;
+    this.totalRequested = (double) ChronoUnit.DAYS.between(startDate, endDate) ;
   }
 
   @PreUpdate
   public void onUpdate() {
     updatedAt = LocalDateTime.now();
+  }
+
+  public void totalRequested(Integer totalRequested) {
+    this.totalRequested = (double) ChronoUnit.DAYS.between(startDate, endDate) ;
   }
 
 }
